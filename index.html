@@ -19,32 +19,39 @@
             <!-- completed section -->
             <div class="section-completed">
                 <h3>Completed</h3>
-                <div class="list-task">Project structure</div>
+                <div class="list-completed-task"></div>
             </div>
             <!-- waiting section -->
             <div class="section-waited">
+                <div class="task-modal">
+                    <input id="new-task" type="text" placeholder="write here">
+                    <div><i class="fas fa-arrow-circle-up fa-2x"></i></div>
+                </div>
                 <h3>To do list</h3>
                 <div class="waited-content">
-                    <div class="list-task">Project structure</div>
-                    <div class="waited-task-btns">
-                        <div><i class="fas fa-edit"></i></div>
-                        <div><i class="fas fa-trash-alt"></i></div>
-                        <div><i class="far fa-square"></i></div>
-                    </div>
+                    <!-- <div class="waited-task">
+                        <div class="list-task"></div>
+                        <div class="waited-task-btns">
+                            <i class="fas fa-edit"></i>
+                            <i class="fas fa-toilet"></i>
+                            <i class="far fa-square"></i>
+                        </div>
+                    </div> -->
                 </div>
                 <div class="waited-bottom-btns">
                     <div><i class="fas fa-plus-circle"></i></div>
-                    <div><i class="fas fa-toilet"></i></div>
+                    <!-- <div><i class="fas fa-toilet"></i></div> -->
                 </div>
             </div>
         </div>
         <!-- banner section -->
         <div class="section-banner">
-            <h5>Just do it</h5>
+            <h5 class="banner-content"></h5>
         </div>
     </div>
     <!-- Custom js -->
     <script src="/app.js"></script>
+    <script src="/banner-data.js"></script>
 </body>
 
 </html>

@@ -38,6 +38,9 @@ body {
             position: absolute;
             bottom: 50%;
         }
+        i:hover {            
+            cursor: pointer;
+        }
         h3 {
             font-size: 2rem;
             padding: .5rem 0;
@@ -47,6 +50,9 @@ body {
     .section-completed { 
         text-align: center;       
         width: 35%;
+        .list-completed-task {
+           
+        }
     }
     .section-waited {
         background: rgba(196, 49, 49, 0.63);
@@ -54,14 +60,45 @@ body {
         position: relative;
         text-align: center; 
         width: 65%;
-            .waited-content {
+        .task-modal {
+            align-items: center;
+            background: #fff;
+            bottom: 50%;
+            border-radius: 4px;
+            display: none;
+            flex-direction: column;
+            height: 10rem;
+            justify-content: space-evenly;
+            left: 50%;
+            position: absolute;
+            transform: translate(-50%, 50%);
+            width: 30rem;
+            input {
+                border-radius: 4px;
+                color: #000;
+                font-size: 1.3rem;
+                height: 3rem;
+                padding: .8rem;
+                width: 90%;
+            }
+            .fa-arrow-circle-up {
+                color: rgba(196, 49, 49, 0.63);
+                &:hover {
+                    color: rgba(196, 49, 49, 0.89); 
+                    transition: .2s ease-in-out;
+                }
+            }
+        }
+            .waited-task {
                 display: flex;
+                margin: 1rem 0;
                 .waited-task-btns {
                     align-items: center;
                     display: flex;
-                    div {
-                        margin: 0 .3rem;
+                    margin-right: 1rem;
+                    i {
                         font-size: 1.1rem;
+                        margin: 0 .3rem;                        
                     }                    
                 }
             }
@@ -72,7 +109,7 @@ body {
                 width: 50%;
                 bottom: 1rem;
                 right: 1rem;
-                font-size: 1.5rem;
+                font-size: 1.7rem;          
             }
         }
     }
@@ -82,7 +119,8 @@ body {
         display: flex;
         justify-content: center;
         width: 20%;
-        h5 {
+        .banner-content {
+            color: #fff;
             font-size: 2.5rem;
             transform: rotate(-90deg);
         }
