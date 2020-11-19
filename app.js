@@ -16,7 +16,6 @@ let waitedContent = document.querySelector('.waited-content');
 // Display task modal 
 addBtn.addEventListener("click", () => {
     document.querySelector('.task-modal').style.display = "flex";
-    deleteTask();
 })
 // Push new tasks to TaskData
 uploadBtn.addEventListener("click", () => {
@@ -27,9 +26,10 @@ uploadBtn.addEventListener("click", () => {
     listTasks(taskID);
     document.querySelector('.task-modal').style.display = "none";
 })
-const listTasks = (taskID) => {   
+
+const listTasks = (taskID) => {
     for (let id = taskID; id < TaskData.length; id++) { 
-        createTaskNode(id)  
+        createTaskNode(id) 
         deleteTask();
     }
 }
@@ -66,20 +66,23 @@ const createTaskNode = (id) => {
     waitedContent.appendChild(waitedTask);
 }
 
-    // let listTask = document.querySelector('.list-task');
     const deleteTask = () => {
             let deleteBtn = document.querySelectorAll('.fa-toilet');
             deleteBtn.forEach(element => {
                 element.addEventListener('click', () => {
-                    TaskData.pop(element.parentElement.id)
+
+                    TaskData.splice(element.id, 1) ;
+                    console.log(TaskData.splice(element.id, 1))
+
+                    waitedContent.innerHTML = ""; 
+                    taskID -= taskID;
+                    listTasks(taskID);
                 })
-               
             });
         };
 
 
-
-        // -----------------------------------------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------------------------------------
 
 // let TaskData = [];
 
@@ -99,10 +102,10 @@ const createTaskNode = (id) => {
 // // Display task modal 
 // addBtn.addEventListener("click", () => {
 //     document.querySelector('.task-modal').style.display = "flex";
-//     // deleteTask();
+    
 // })
 // // Push new tasks to TaskData
-// uploadBtn.addEventListener("click", () => {
+// uploadBtn.addEventListener("click", testing=() => {
 //     let content = newTask.value;
 //     taskID++;
 //     TaskData.push({ id: taskID, content: content, completed: false })
@@ -116,7 +119,8 @@ const createTaskNode = (id) => {
 
 //     let deleteIcon = document.createElement("i");
 //     deleteIcon.className = "fas fa-toilet";
-//     deleteIcon.setAttribute("id", taskID)
+//     let iconId = "icon" + taskID;
+//     deleteIcon.setAttribute("id", iconId)
 
 //     let checkIcon = document.createElement("i");
 //     checkIcon.className = "far fa-square";
@@ -143,16 +147,21 @@ const createTaskNode = (id) => {
 
 //     deleteTask();
 // })
-// TaskData.rem
 
 // const deleteTask = () => {
-//     let deleteBtn = document.querySelectorAll('.fa-toilet');
-//     deleteBtn.forEach(element => {
-//         element.addEventListener('click', () => {
-//             TaskData.pop(element.id)
-//         })
-//     });
-// };
+//                 let deleteBtn = document.querySelectorAll('.fa-toilet');
+//                 deleteBtn.forEach(element => {
+//                     element.addEventListener('click', () => {
+    
+//                         TaskData.splice(element.id, 1) ;
+//                         console.log(TaskData.splice(element.id, 1))
+    
+//                         waitedContent.innerHTML = ""; 
+//                         taskID -= taskID;
+//                         testing();
+//                     })
+//                 });
+//             };
 
 
 
