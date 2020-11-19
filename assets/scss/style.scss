@@ -33,6 +33,9 @@ body {
             margin: 0 auto;
             padding-bottom: .8rem;
             width: 60%;
+            &-style {
+                text-decoration: line-through;
+            }
         }
         .fa-chevron-right {
             position: absolute;

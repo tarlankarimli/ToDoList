@@ -1,62 +1,77 @@
+// start valued variables
 let TaskData = [];
-
-// buttons 
 const addBtn = document.querySelector('.fa-plus-circle');
-const editBtn = document.querySelector('.fa-edit');
-const uncheckBtn = document.querySelector('.fa-square');
 const sliderBtn = document.querySelector('.fa-chevron-right');
 const uploadBtn = document.querySelector('.fa-arrow-circle-up');
-let newTask = document.querySelector('#new-task');
-
-// start valued variables
+let modalDisplay = document.querySelector('.task-modal');
+let newOrEditedTask = document.querySelector('#new-task');
+let isEdit = false;
+let editedIndex;
+let checked = false;
 let taskID = -1;
-
 let waitedContent = document.querySelector('.waited-content');
 
 // Display task modal 
 addBtn.addEventListener("click", () => {
-    document.querySelector('.task-modal').style.display = "flex";
+    modalDisplay.style.display = "flex";
 })
-// Push new tasks to TaskData
+// Push new or edited tasks to TaskData
 uploadBtn.addEventListener("click", () => {
-    let content = newTask.value;
-    taskID++;
-    TaskData.push({ id: taskID, content: content, completed: false })
-    newTask.value = "";  
-    listTasks(taskID);
-    document.querySelector('.task-modal').style.display = "none";
-})
-
-const listTasks = (taskID) => {
-    for (let id = taskID; id < TaskData.length; id++) { 
-        createTaskNode(id) 
-        deleteTask();
+    // check if input value is null
+    if (newOrEditedTask.value === "") {
+        document.querySelector('.input-error').style.display = "block";
+        // check is edit
+    } else if (isEdit === true) {
+        TaskData[editedIndex].content = newOrEditedTask.value;
+        let listTask = document.querySelector(`#list-task-${editedIndex}`);
+        listTask.innerHTML = "";
+        let textNode = document.createTextNode(newOrEditedTask.value);
+        listTask.appendChild(textNode);
+        isEdit = false;
+        modalDisplay.style.display = "none";
+        newOrEditedTask.value = "";
     }
-}
+    // creating new task
+    else {
+        let content = newOrEditedTask.value;
+        taskID++;
+        TaskData.push({ id: taskID, content: content, completed: false })
+        newOrEditedTask.value = "";
+        createTaskNode(taskID);
+        modalDisplay.style.display = "none";
+        document.querySelector('.input-error').style.display = "none";
+    }
+})
 
 // Create html nodes to display task
 const createTaskNode = (id) => {
     let editIcon = document.createElement("i");
     editIcon.className = "fas fa-edit";
+    editIcon.addEventListener('click', () => { editTask(id) })
 
     let deleteIcon = document.createElement("i");
     deleteIcon.className = "fas fa-toilet";
-    deleteIcon.setAttribute("id", id)
+    deleteIcon.setAttribute("id", `list-item-delete${id}`)
+    deleteIcon.addEventListener("click", () => { deleteTask(id) });
 
     let checkIcon = document.createElement("i");
     checkIcon.className = "far fa-square";
+    checkIcon.setAttribute("id", `list-item-check${id}`)
+    checkIcon.addEventListener('click', ()=> {checkTask(id)})
 
     let waitedTaskBtns = document.createElement("div");
     waitedTaskBtns.className = "waited-task-btns";
 
     let listTask = document.createElement("div");
     listTask.className = "list-task";
+    listTask.setAttribute("id", `list-task-${id}`)
     let textNode = document.createTextNode(TaskData[id].content);
     listTask.appendChild(textNode);
-    // listTask.setAttribute("draggable", true);
+    listTask.setAttribute("draggable", true);
 
     let waitedTask = document.createElement("div");
     waitedTask.className = "waited-task";
+    waitedTask.setAttribute("id", `list-item-${id}`);
 
     waitedTaskBtns.appendChild(editIcon);
     waitedTaskBtns.appendChild(deleteIcon);
@@ -65,106 +80,27 @@ const createTaskNode = (id) => {
     waitedTask.appendChild(waitedTaskBtns);
     waitedContent.appendChild(waitedTask);
 }
-
-    const deleteTask = () => {
-            let deleteBtn = document.querySelectorAll('.fa-toilet');
-            deleteBtn.forEach(element => {
-                element.addEventListener('click', () => {
-
-                    TaskData.splice(element.id, 1) ;
-                    console.log(TaskData.splice(element.id, 1))
-
-                    waitedContent.innerHTML = ""; 
-                    taskID -= taskID;
-                    listTasks(taskID);
-                })
-            });
-        };
-
-
-// -----------------------------------------------------------------------------------------------------------------------------
-
-// let TaskData = [];
-
-// // buttons 
-// const addBtn = document.querySelector('.fa-plus-circle');
-// const editBtn = document.querySelector('.fa-edit');
-// const uncheckBtn = document.querySelector('.fa-square');
-// const sliderBtn = document.querySelector('.fa-chevron-right');
-// const uploadBtn = document.querySelector('.fa-arrow-circle-up');
-// let newTask = document.querySelector('#new-task');
-
-// // start valued variables
-// let taskID = -1;
-
-// let waitedContent = document.querySelector('.waited-content');
-
-// // Display task modal 
-// addBtn.addEventListener("click", () => {
-//     document.querySelector('.task-modal').style.display = "flex";
-    
-// })
-// // Push new tasks to TaskData
-// uploadBtn.addEventListener("click", testing=() => {
-//     let content = newTask.value;
-//     taskID++;
-//     TaskData.push({ id: taskID, content: content, completed: false })
-//     newTask.value = "";
-//     document.querySelector('.task-modal').style.display = "none";
-
-//     // Create html nodes to display task
-
-//     let editIcon = document.createElement("i");
-//     editIcon.className = "fas fa-edit";
-
-//     let deleteIcon = document.createElement("i");
-//     deleteIcon.className = "fas fa-toilet";
-//     let iconId = "icon" + taskID;
-//     deleteIcon.setAttribute("id", iconId)
-
-//     let checkIcon = document.createElement("i");
-//     checkIcon.className = "far fa-square";
-
-//     let waitedTaskBtns = document.createElement("div");
-//     waitedTaskBtns.className = "waited-task-btns";
-
-//     let listTask = document.createElement("div");
-//     listTask.className = "list-task";
-//     let textNode = document.createTextNode(TaskData[taskID].content);
-//     listTask.appendChild(textNode);
-//     // listTask.setAttribute("draggable", true);
-
-//     let waitedTask = document.createElement("div");
-//     waitedTask.className = "waited-task";
-
-//     waitedTaskBtns.appendChild(editIcon);
-//     waitedTaskBtns.appendChild(deleteIcon);
-//     waitedTaskBtns.appendChild(checkIcon);
-//     waitedTask.appendChild(listTask);
-//     waitedTask.appendChild(waitedTaskBtns);
-//     waitedContent.appendChild(waitedTask);
-
-
-//     deleteTask();
-// })
-
-// const deleteTask = () => {
-//                 let deleteBtn = document.querySelectorAll('.fa-toilet');
-//                 deleteBtn.forEach(element => {
-//                     element.addEventListener('click', () => {
-    
-//                         TaskData.splice(element.id, 1) ;
-//                         console.log(TaskData.splice(element.id, 1))
-    
-//                         waitedContent.innerHTML = ""; 
-//                         taskID -= taskID;
-//                         testing();
-//                     })
-//                 });
-//             };
-
-
-
+//  delete item
+const deleteTask = (id) => {
+    const item = document.querySelector(`#list-item-${id}`);
+    item.style.display = "none";
+};
+// edit item
+const editTask = (id) => {
+    const item = document.querySelector(`#list-task-${id}`);
+    document.querySelector('.task-modal').style.display = "flex";
+    newOrEditedTask.value = item.innerHTML;
+    isEdit = true;
+    editedIndex = id;
+}
+// check task
+const checkTask = (id) => {
+    checked = !checked;
+    const item = document.querySelector(`#list-task-${id}`);
+    item.className = checked ? "list-task list-task-style" : "list-task";
+    const itemIcon =  document.querySelector(`#list-item-check${id}`);
+    itemIcon.className = checked? "far fa-check-square" : "far fa-square";
+}
 
 
 

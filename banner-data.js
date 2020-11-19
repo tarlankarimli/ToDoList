@@ -1,7 +1,7 @@
 const bannerData = [
-    "Bugünün işini sabaha qoyma",
+    "Bugünün işini sabaha qoyma!",
     "Adam ol!",
-    "Başını buraxma"
+    "Başını buraxma!"
 ]
 
 let bannerContent = document.querySelector('.banner-content')
