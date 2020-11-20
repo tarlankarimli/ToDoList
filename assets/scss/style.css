@@ -16,16 +16,19 @@ body {
 .container {
   padding: .5rem;
   height: 100vh;
-  display: flex; }
+  display: flex;
+  overflow: hidden; }
   .container .do-list {
     display: flex;
     height: 100%;
     position: relative;
     width: 80%;
     justify-content: space-between;
-    background: rgba(0, 0, 0, 0.603); }
+    background: #222e2e;
+    transition: .5s; }
     .container .do-list .list-task {
       border-bottom: 1px solid #fff;
+      cursor: pointer;
       display: inline-block;
       font-size: 1.3rem;
       margin: 0 auto;
@@ -33,9 +36,10 @@ body {
       width: 60%; }
       .container .do-list .list-task-style {
         text-decoration: line-through; }
-    .container .do-list .fa-chevron-right {
-      position: absolute;
-      bottom: 50%; }
+    .container .do-list .fa-chevron-right, .container .do-list .fa-chevron-left {
+      bottom: 50%;
+      padding-left: .5rem;
+      position: absolute; }
     .container .do-list i:hover {
       cursor: pointer; }
     .container .do-list h3 {
@@ -46,7 +50,6 @@ body {
     .container .do-list .section-completed {
       display: none;
       text-align: center;
-      width: 0%;
       height: 100%; }
       .container .do-list .section-completed .list-completed-task {
         height: 100%; }
@@ -102,7 +105,7 @@ body {
         width: 50%;
         bottom: 1rem;
         right: 1rem;
-        font-size: 1.7rem; }
+        font-size: 2rem; }
   .container .section-banner {
     align-items: center;
     background: rgba(0, 0, 0, 0.603);

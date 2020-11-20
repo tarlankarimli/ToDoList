@@ -1,7 +1,10 @@
 const bannerData = [
     "Bugünün işini sabaha qoyma!",
     "Adam ol!",
-    "Başını buraxma!"
+    "Başını buraxma!",
+    "Nə vaxt tərpənirsən?!",
+    "Task'lar bitəcəkdi bəs?",
+    "Nooooldu?!"
 ]
 
 let bannerContent = document.querySelector('.banner-content')

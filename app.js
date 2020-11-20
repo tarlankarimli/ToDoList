@@ -1,11 +1,12 @@
 // start valued variables
 let TaskData = [];
 const addBtn = document.querySelector('.fa-plus-circle');
-const sliderBtn = document.querySelector('.fa-chevron-right');
+const sliderBtn = document.querySelector('#slider-btn');
 const uploadBtn = document.querySelector('.fa-arrow-circle-up');
 let modalDisplay = document.querySelector('.task-modal');
 let newOrEditedTask = document.querySelector('#new-task');
 let isEdit = false;
+let sliderOn = false;
 let editedIndex;
 let taskID = -1;
 let waitedContent = document.querySelector('.waited-content');
@@ -13,23 +14,34 @@ let dragList = document.querySelector('.list-completed-task');
 dragList.setAttribute("ondrop", "drop(event)");
 dragList.setAttribute("ondragover", "allowDrop(event)");
 
-sliderBtn.addEventListener('click', ()=> {
+sliderBtn.addEventListener('click', () => {
+    sliderOn = !sliderOn;
     let sectionCompleted = document.querySelector('.section-completed');
-    sectionCompleted.style.width="35%";
-    sectionCompleted.style.display="block";
+    let doList = document.querySelector('.do-list');
+    sectionCompleted.style.width = sliderOn ? "35%" : "0";
+    sectionCompleted.style.display = sliderOn ? "block" : "none";
+    doList.style.background = sliderOn ? "rgba(0, 0, 0, 0.603)" : "rgb(34, 46, 46)";
+    sliderBtn.className = sliderOn ? "fas fa-chevron-left fa-3x" : "fas fa-chevron-right fa-3x";
 })
 
 // Display task modal 
 addBtn.addEventListener("click", () => {
     modalDisplay.style.display = "flex";
+    newOrEditedTask.addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+         event.preventDefault();
+         uploadBtn.click();
+        }
+      });
 })
 // Push new or edited tasks to TaskData
-uploadBtn.addEventListener("click", () => {
+uploadBtn.addEventListener("click", () => {    
     // check if input value is null
     if (newOrEditedTask.value === "") {
         document.querySelector('.input-error').style.display = "block";
         // check is edit
-    } else if (isEdit === true) {
+    }
+     else if (isEdit === true) {
         TaskData[editedIndex].content = newOrEditedTask.value;
         let listTask = document.querySelector(`#list-task-${editedIndex}`);
         listTask.innerHTML = "";
@@ -104,7 +116,7 @@ const editTask = (id) => {
     isEdit = true;
     editedIndex = id;
 }
-// check task
+// check task to complete
 const checkTask = (id) => {
     TaskData[id].completed = !TaskData[id].completed;
     let isCompleted = TaskData[id].completed;
@@ -112,11 +124,11 @@ const checkTask = (id) => {
     item.className = isCompleted ? "list-task list-task-style" : "list-task";
     const itemIcon = document.querySelector(`#list-item-check${id}`);
     itemIcon.className = isCompleted ? "far fa-check-square" : "far fa-square";
-
+// push task to complete section by check button click
     isCompleted ? createCompletedNode(id, item, isCompleted) : removeCompletedNode(id, isCompleted);
 
 }
-
+// create task node for complete section
 const createCompletedNode = (id, item, isCompleted) => {
     console.log("test: ", isCompleted)
     let completedTaskItem = document.createElement('div');
@@ -127,12 +139,13 @@ const createCompletedNode = (id, item, isCompleted) => {
     let listCompletedTasks = document.querySelector('.list-completed-task');
     listCompletedTasks.appendChild(completedTaskItem);
 }
+// remove task node for complete section
 const removeCompletedNode = (id) => {
     let completedTaskItem = document.querySelector(`#completed-item-${id}`);
     completedTaskItem.style.display = "none";
     completedTaskItem.removeAttribute("id");
 }
-
+// drag and drop block
 const dragStart = (event) => {
     event.dataTransfer.setData("Text", event.target.id);
 }
@@ -145,10 +158,10 @@ const drop = (event) => {
     let completedData = document.getElementById(data).innerHTML;
     let completedTaskItem = document.createElement('div');
     let textNode = document.createTextNode(completedData);
-    console.log("object.", textNode)
+    console.log("object.", textNode);
     completedTaskItem.appendChild(textNode);
     completedTaskItem.className = "completed-task";
     event.target.appendChild(completedTaskItem);
     let changeToDoList = document.getElementById(data);
     changeToDoList.className = "list-task list-task-style";
-  }
+}
