@@ -7,9 +7,17 @@ let modalDisplay = document.querySelector('.task-modal');
 let newOrEditedTask = document.querySelector('#new-task');
 let isEdit = false;
 let editedIndex;
-let checked = false;
 let taskID = -1;
 let waitedContent = document.querySelector('.waited-content');
+let dragList = document.querySelector('.list-completed-task');
+dragList.setAttribute("ondrop", "drop(event)");
+dragList.setAttribute("ondragover", "allowDrop(event)");
+
+sliderBtn.addEventListener('click', ()=> {
+    let sectionCompleted = document.querySelector('.section-completed');
+    sectionCompleted.style.width="35%";
+    sectionCompleted.style.display="block";
+})
 
 // Display task modal 
 addBtn.addEventListener("click", () => {
@@ -57,7 +65,7 @@ const createTaskNode = (id) => {
     let checkIcon = document.createElement("i");
     checkIcon.className = "far fa-square";
     checkIcon.setAttribute("id", `list-item-check${id}`)
-    checkIcon.addEventListener('click', ()=> {checkTask(id)})
+    checkIcon.addEventListener('click', () => { checkTask(id) })
 
     let waitedTaskBtns = document.createElement("div");
     waitedTaskBtns.className = "waited-task-btns";
@@ -68,6 +76,9 @@ const createTaskNode = (id) => {
     let textNode = document.createTextNode(TaskData[id].content);
     listTask.appendChild(textNode);
     listTask.setAttribute("draggable", true);
+    listTask.setAttribute("ondragstart", "dragStart(event)");
+    listTask.setAttribute("ondrag", "dragging(event)");
+
 
     let waitedTask = document.createElement("div");
     waitedTask.className = "waited-task";
@@ -95,12 +106,49 @@ const editTask = (id) => {
 }
 // check task
 const checkTask = (id) => {
-    checked = !checked;
+    TaskData[id].completed = !TaskData[id].completed;
+    let isCompleted = TaskData[id].completed;
     const item = document.querySelector(`#list-task-${id}`);
-    item.className = checked ? "list-task list-task-style" : "list-task";
-    const itemIcon =  document.querySelector(`#list-item-check${id}`);
-    itemIcon.className = checked? "far fa-check-square" : "far fa-square";
+    item.className = isCompleted ? "list-task list-task-style" : "list-task";
+    const itemIcon = document.querySelector(`#list-item-check${id}`);
+    itemIcon.className = isCompleted ? "far fa-check-square" : "far fa-square";
+
+    isCompleted ? createCompletedNode(id, item, isCompleted) : removeCompletedNode(id, isCompleted);
+
 }
 
+const createCompletedNode = (id, item, isCompleted) => {
+    console.log("test: ", isCompleted)
+    let completedTaskItem = document.createElement('div');
+    let textNode = document.createTextNode(item.innerHTML);
+    completedTaskItem.appendChild(textNode);
+    completedTaskItem.className = "completed-task";
+    completedTaskItem.setAttribute("id", `completed-item-${id}`);
+    let listCompletedTasks = document.querySelector('.list-completed-task');
+    listCompletedTasks.appendChild(completedTaskItem);
+}
+const removeCompletedNode = (id) => {
+    let completedTaskItem = document.querySelector(`#completed-item-${id}`);
+    completedTaskItem.style.display = "none";
+    completedTaskItem.removeAttribute("id");
+}
 
-
+const dragStart = (event) => {
+    event.dataTransfer.setData("Text", event.target.id);
+}
+const allowDrop = (event) => {
+    event.preventDefault();
+}
+const drop = (event) => {
+    event.preventDefault();
+    let data = event.dataTransfer.getData("Text");
+    let completedData = document.getElementById(data).innerHTML;
+    let completedTaskItem = document.createElement('div');
+    let textNode = document.createTextNode(completedData);
+    console.log("object.", textNode)
+    completedTaskItem.appendChild(textNode);
+    completedTaskItem.className = "completed-task";
+    event.target.appendChild(completedTaskItem);
+    let changeToDoList = document.getElementById(data);
+    changeToDoList.className = "list-task list-task-style";
+  }

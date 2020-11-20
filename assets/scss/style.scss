@@ -20,12 +20,12 @@ body {
     display: flex;
 
     .do-list{
-        background: rgba(0, 0, 0, 0.603);
         display: flex;
         height: 100%;
         position: relative;
         width: 80%;
         justify-content: space-between;
+        background: rgba(0, 0, 0, 0.603);
         .list-task {
             border-bottom: 1px solid #fff;
             display: inline-block;
@@ -51,10 +51,17 @@ body {
             text-transform: uppercase;
         }
     .section-completed { 
-        text-align: center;       
-        width: 35%;
+        display: none;
+        text-align: center;     
+        width: 0%;
+        height: 100%;
         .list-completed-task {
-           
+            height: 100%;
+           .completed-task {
+               color: rgb(196, 49, 49);
+               font-size: 1.5rem;
+               margin: 2rem;
+           }
         }
     }
     .section-waited {
@@ -102,7 +109,7 @@ body {
                     i {
                         font-size: 1.1rem;
                         margin: 0 .3rem;                        
-                    }                    
+                    }         
                 }
             }
             .waited-bottom-btns {
@@ -129,4 +136,3 @@ body {
         }
     }
 }
-

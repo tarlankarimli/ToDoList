@@ -18,12 +18,12 @@ body {
   height: 100vh;
   display: flex; }
   .container .do-list {
-    background: rgba(0, 0, 0, 0.603);
     display: flex;
     height: 100%;
     position: relative;
     width: 80%;
-    justify-content: space-between; }
+    justify-content: space-between;
+    background: rgba(0, 0, 0, 0.603); }
     .container .do-list .list-task {
       border-bottom: 1px solid #fff;
       display: inline-block;
@@ -44,8 +44,16 @@ body {
       margin-bottom: 2rem;
       text-transform: uppercase; }
     .container .do-list .section-completed {
+      display: none;
       text-align: center;
-      width: 35%; }
+      width: 0%;
+      height: 100%; }
+      .container .do-list .section-completed .list-completed-task {
+        height: 100%; }
+        .container .do-list .section-completed .list-completed-task .completed-task {
+          color: #c43131;
+          font-size: 1.5rem;
+          margin: 2rem; }
     .container .do-list .section-waited {
       background: rgba(196, 49, 49, 0.63);
       clip-path: polygon(10% 0, 100% 0, 100% 10%, 100% 100%, 10% 100%, 0 90%, 0 10%);
